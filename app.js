@@ -31,7 +31,7 @@ function app(people) {
         case "no":
             //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
                 //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
-            searchResults = searchByUserDefinedTrait(people);
+                searchByTraits(people);
             break;
         default:
             // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
@@ -90,7 +90,8 @@ function mainMenu(person, people) {
             return;
 
         case "test":
-            console.log(displayPerson(person))
+            searchByoccupation(people)
+            console.log("This is for the test")
             
 
         default:
@@ -151,13 +152,13 @@ function searchByName(people) {
             }
             `${person.firstName} ${person.lastName} + \n`;
         }
+        return personInfo;
     }
-   
-   
-    let personInfo = `First Name: ${person.firstName}\n`;
-    personInfo += `Last Name: ${person.lastName}\n`;
-    //! TODO #1a: finish getting the rest of the information to display //////////////////////////////////////////
-    alert(personInfo);
+      
+    // let personInfo = `First Name: ${person.firstName}\n`;
+    // personInfo += `Last Name: ${person.lastName}\n`;
+    // //! TODO #1a: finish getting the rest of the information to display //////////////////////////////////////////
+    // alert(personInfo);
 
 // End of displayPerson()
 
@@ -222,15 +223,15 @@ function searchByTraits(people){
             break;
 
         case "weight":
-            
+            results = searchByWeight(people)
             break;
 
         case "eyeColor":
-            
+            results = searchByeyeColor(people)
             break;
 
         case "occupation":
-            
+            results = searchByoccupation(people)
             break;
             
         default:
@@ -280,9 +281,10 @@ function searchByDob(people){
 
 function searchByHeight(people){
     let userInput = prompt("Please enter the height in inches:");
+    let searchHeight = parseInt(userInput)
     let results = people.filter(
         function(person){
-            if(userInput === person.height){
+            if(searchHeight === person.height){
                 return true
             }
         }
@@ -292,10 +294,11 @@ function searchByHeight(people){
 }
 
 function searchByWeight(people){
-    let userInput = prompt("Please enter the weight:");
+    let userInput = prompt("Please enter weight:");
+    let searchWeight = parseInt(userInput)
     let results = people.filter(
         function(person){
-            if(userInput === person.weight){
+            if(searchWeight === person.weight){
                 return true
             }
         }
@@ -305,25 +308,52 @@ function searchByWeight(people){
 }
 
 function searchByeyeColor(people){
-    let userInput = prompt("Please enter the eye color:");
+    let userInput = prompt("Please enter eye color:");
     let results = people.filter(
         function(person){
-            if(userInput === person.weight){
+            if(userInput === person.eyeColor){
                 return true
             }
         }
     )
+        console.log(results);
+        return results;
 }
 
-function searchByUserDefinedTrait(people){
-    let userInputProp = prompt("Please enter what specific trait you would like to search by:");
-    let userInputVal = prompt("please enter the value you'd like to search for.")
+function searchByoccupation(people){
+    let userInput = prompt("Please enter occupation:");
     let results = people.filter(
         function(person){
-            if(person[userInputProp] === userInputVal || +userInputVal === person[userInputProp]){
-                return true;
+            if(userInput === person.occupation){
+                return true
             }
         }
-    );
-    return results;
+    )
+        console.log(results);
+        return results;
 }
+/**
+ * 
+ * @param {*} people 
+ * @returns 
+ */
+// function searchByUserDefinedTrait(people){
+//     let userInputProp = prompt("Please enter what specific trait you would like to search by:");
+//     let userInputVal = prompt("please enter the value you'd like to search for.")
+//     let results = people.filter(
+//         function(person){
+//             if(person[userInputProp] === userInputVal || +userInputVal === person[userInputProp]){
+//                 return true;
+//             }
+//         }
+//     );
+//     return results;
+// }
+
+// While (user is not done)
+// tempPeople = data  
+// prompt for trait [searchByUserDefied] = choice
+//  If choice is Gender
+//      tempPeople = searchbyGender(tempPeople)  // Filter out selected Gender
+// else if choice is eyeColor
+//      tempPeople = searchByeyeColor(tempPeople) // Filter by selected eyeColor
