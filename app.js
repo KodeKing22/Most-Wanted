@@ -19,7 +19,7 @@ function app(people) {
     // promptFor() is a custom function defined below that helps us prompt and validate input more easily
     // Note that we are chaining the .toLowerCase() immediately after the promptFor returns its value
     let searchType = promptFor(
-        "Do you know the name of the person you are looking for? Enter 'yes' or 'no'",
+        "Do you know the name of the person you are looking for?\nEnter 'yes' or 'no'",
         yesNo
     ).toLowerCase();
     let searchResults;
@@ -127,14 +127,16 @@ function searchByName(people) {
  * to the user in the form of an alert().
  * @param {Array} people        A collection of person objects.
  */
+    function displayPeople(people){
 
-    // alert(
-        
-    //         .map(function (person) {
-    //             return;
-    //         })
-    //         .join("\n")
-    // );
+        alert(
+            
+                people.map(function (person) {
+                    return `${person.firstName} ${person.lastName}`;
+                })
+                .join("\n")
+        );
+    }
 
 // End of displayPeople()
 
@@ -222,32 +224,32 @@ function chars(input) {
  * @returns {Array}        A collection of people objects
  */
 function searchByTraits(people){
-    let userInput = prompt("Please enter what specific trait you would liket to search by:\ngender\ndob\nheight\nweight\neyeColor\noccupation.");
+    let userInput = prompt("Please enter what specific trait you would liket to search by:\nGender\nDOB\nHeight\nWeight\nEye Color\nOccupation.");
     let userIsNotFinished = true
     let results = people
     while (userIsNotFinished){
     switch (userInput) {
-        case "gender":
+        case "Gender":
             results = searchByGender(people)
             break;
 
-        case "dob":
+        case "DOB":
             results = searchByDob(people)
             break;
 
-        case "height":
+        case "Height":
             results = searchByHeight(people)
             break;
 
-        case "weight":
+        case "Weight":
             results = searchByWeight(people)
             break;
 
-        case "eyeColor":
+        case "Eye Color":
             results = searchByeyeColor(people)
             break;
 
-        case "occupation":
+        case "Occupation":
             results = searchByoccupation(people)
             break;
             
@@ -323,9 +325,15 @@ function searchByWeight(people){
 }
 
 function searchByeyeColor(people){
+    let results;
     let userInput = prompt("Please enter eye color:");
-    let results = people.filter(
-        function(person){
+    let isEyeColor = isEyeColorValid(userInput);
+        if (!isEyeColor){
+            alert(`${userInput} is not valid. Enter eye color.`)
+            results = searchByeyeColor(people)
+        }
+        else results = people.filter(
+            function(person){
             if(userInput === person.eyeColor){
                 return true
             }
@@ -334,7 +342,18 @@ function searchByeyeColor(people){
         console.log(results);
         return results;
 }
-
+function isEyeColorValid(userInput){
+    if (
+        userInput === "blue" ||
+        userInput === "green" ||
+        userInput === "black" ||
+        userInput === "brown" ||
+        userInput === "hazel" 
+    )
+    {
+        return true
+    }
+}
 function searchByoccupation(people){
     let userInput = prompt("Please enter occupation:");
     let results = people.filter(
@@ -353,7 +372,7 @@ function searchByoccupation(people){
  * @returns 
  */
 function searchByUserDefinedTrait(people){
-    let userInputProp = prompt("Please enter what specific trait you would like to search by:\ngender\ndob\nheight\nweight\neyeColor\noccupation.");
+    let userInputProp = prompt("Please enter what specific trait you would like to search by:\nGender\nDOB\nHeight\nWeight\nEye Color\nOccupation.");
     let userInputVal = prompt("please enter the value you'd like to search for.")
     let results = people.filter(
         function(person){
