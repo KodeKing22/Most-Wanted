@@ -31,7 +31,7 @@ function app(people) {
         case "no":
             //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
                 //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
-                searchByTraits(people);
+                searchResults = searchByTraits(people);
             break;
         default:
             // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
@@ -59,7 +59,7 @@ function mainMenu(person, people) {
         return app(people);
     }
     let displayOption = prompt(
-        `Found ${person[0].firstName} ${person[0].lastName}. Do you want to know their 'info', 'family', or 'descendants'?\nType the option you want or type 'restart' or 'quit'.`
+        `Found ${person[0].firstName} ${person[0].lastName}.\nDo you want to know their 'info', 'family', or 'descendants'?\nType the option you want or type 'restart' or 'quit'.`
     );
     // Routes our application based on the user's input
     switch (displayOption) {
@@ -90,7 +90,7 @@ function mainMenu(person, people) {
             return;
 
         case "test":
-            searchByoccupation(people)
+            searchByTraits(people)
             console.log("This is for the test")
             
 
@@ -145,13 +145,24 @@ function searchByName(people) {
  */
 
     function displayPerson(person) {
-        let personInfo = "";
+        let personInfo = `First Name: ${person.firstName}\n`;
+        personInfo += `Last Name: ${person.lastname}\n`;
+        personInfo += `Gender: ${person.gender}\n`;
+        personInfo += `DOB: ${person.dob}\n`;
+        personInfo += `Height: ${person.height}\n`;
+        personInfo += `Weight: ${person.weight}\n`;
+        personInfo += `Eye Color: ${person.eyeColor}\n`;
+        personInfo += `Occupation: ${person.occupation}\n`;
+        
+        
+
         for (let property in person) {
             if(property === "parents" || property === "currentSpouse"){
                 continue
             }
             `${person.firstName} ${person.lastName} + \n`;
         }
+        console.log(personInfo);
         return personInfo;
     }
       
@@ -162,6 +173,9 @@ function searchByName(people) {
 
 // End of displayPerson()
 
+    // function findPersonFamily(person, people) {
+    //     let 
+    // }
 /**
  * This function's purpose is twofold:
  * First, to generate a prompt with the value passed in to the question parameter.
@@ -209,6 +223,9 @@ function chars(input) {
  */
 function searchByTraits(people){
     let userInput = prompt("Please enter what specific trait you would liket to search by:\ngender\ndob\nheight\nweight\neyeColor\noccupation.");
+    let userIsNotFinished = true
+    let results = people
+    while (userIsNotFinished){
     switch (userInput) {
         case "gender":
             results = searchByGender(people)
@@ -236,16 +253,14 @@ function searchByTraits(people){
             
         default:
             return searchByName(people)
-            break;
-    }
+            }
 
-    let results = people.filter(
-        function(person){
-            return true
-        }
-    );
+    
     return results;
-}
+        
+        }
+    
+    }
 /**
  * This funchtion takes in a collection of people-objects
  * inside an array and returns a collection of people-objects
@@ -337,19 +352,18 @@ function searchByoccupation(people){
  * @param {*} people 
  * @returns 
  */
-// function searchByUserDefinedTrait(people){
-//     let userInputProp = prompt("Please enter what specific trait you would like to search by:");
-//     let userInputVal = prompt("please enter the value you'd like to search for.")
-//     let results = people.filter(
-//         function(person){
-//             if(person[userInputProp] === userInputVal || +userInputVal === person[userInputProp]){
-//                 return true;
-//             }
-//         }
-//     );
-//     return results;
-// }
-
+function searchByUserDefinedTrait(people){
+    let userInputProp = prompt("Please enter what specific trait you would like to search by:\ngender\ndob\nheight\nweight\neyeColor\noccupation.");
+    let userInputVal = prompt("please enter the value you'd like to search for.")
+    let results = people.filter(
+        function(person){
+            if(person[userInputProp] === userInputVal || +userInputVal === person[userInputProp]){
+                return true;
+            }
+        }
+    );
+    return results;
+}
 // While (user is not done)
 // tempPeople = data  
 // prompt for trait [searchByUserDefied] = choice
