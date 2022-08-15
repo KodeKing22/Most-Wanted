@@ -59,7 +59,7 @@ function mainMenu(person, people) {
         return app(people);
     }
     let displayOption = prompt(
-        `Found ${person[0].firstName} ${person[0].lastName}.\nDo you want to know their 'info', 'family', or 'descendants'?\nType the option you want or type 'restart' or 'quit'.`
+        `Found ${displayPeople(people)} .\nDo you want to know their 'info', 'family', or 'descendants'?\nType the option you want or type 'restart' or 'quit'.`
     );
     // Routes our application based on the user's input
     switch (displayOption) {
@@ -165,7 +165,7 @@ function searchByName(people) {
             `${person.firstName} ${person.lastName} + \n`;
         }
         console.log(personInfo);
-        return personInfo;
+        alert(personInfo);
     }
       
     // let personInfo = `First Name: ${person.firstName}\n`;
