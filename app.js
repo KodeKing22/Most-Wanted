@@ -376,6 +376,31 @@ function findPersonFamily(person, people) {
     personFamily += "Spouse: " + findPersonById(person.currentSpouse, people) + "\n";
     return personFamily;
 }
+
+function findSiblings(person, people) {
+    if (person.parents.length === 0) {
+      return "None";
+    }
+  
+    let siblings = people.filter(function (el) {
+      if ((el.parents[0] === person.parents[0] ||
+           el.parents[0] === person.parents[1] ||
+           el.parents[1] === person.parents[0] ||
+           el.parents[1] === person.parents[1]) &&
+           el.id !== person.id) {
+        
+        return true;
+      }
+      else {
+        return false;
+      }
+    });
+    siblings.splice(0, siblings.length, ...(new Set(siblings)));
+
+    return siblings.map(function (person) {
+      return person.firstName + " " + person.lastName;
+    });
+  }
 // While (user is not done)
 // tempPeople = data  
 // prompt for trait [searchByUserDefied] = choice
