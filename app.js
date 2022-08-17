@@ -401,6 +401,20 @@ function findSiblings(person, people) {
       return person.firstName + " " + person.lastName;
     });
   }
+  function findChildren(person, people) {
+    let children = people.filter(function (el) {
+      if (el.parents.includes(person.id)) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    });
+    return children.map(function (person) {
+      return person.firstName + " " + person.lastName;
+    });
+    
+  }
 // While (user is not done)
 // tempPeople = data  
 // prompt for trait [searchByUserDefied] = choice
