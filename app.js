@@ -59,7 +59,7 @@ function mainMenu(person, people) {
         return app(people);
     }
     let displayOption = prompt(
-        `Found ${displayPeople(person)} \nDo you want to know their 'info', 'personFamily', or 'descendants'?\nType the option you want or type 'restart' or 'quit'.`
+        `Found ${person[0].firstName} ${person[0].lastName} \nDo you want to know their 'info', 'personFamily', or 'descendants'?\nType the option you want or type 'restart' or 'quit'.`
     );
     // Routes our application based on the user's input
     switch (displayOption) {
@@ -72,8 +72,8 @@ function mainMenu(person, people) {
         case "personFamily":
             //! TODO #2: Declare a findPersonpersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
-            let personpersonFamily = findPersonpersonFamily(person[0], people);
-            alert(personpersonFamily);
+            let personFamily = findPersonFamily(person[0], people);
+            alert(personFamily);
             break;
         case "descendants":
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
@@ -292,7 +292,7 @@ function searchByDob(people){
             }
         }
     )
-        console.log(results);
+        displayPeople(person);
         return results;
 }
 
@@ -306,7 +306,7 @@ function searchByHeight(people){
             }
         }
     )
-        console.log(results);
+        displayPeople(person);
         return results;
 }
 
@@ -320,7 +320,7 @@ function searchByWeight(people){
             }
         }
     )
-        console.log(results);
+        displayPeople(person);
         return results;
 }
 
@@ -385,7 +385,6 @@ function findPersonFamily(person, people) {
     let personFamily = "Parents: " + findParentById(person.parents, people).toString() + "\n";
     personFamily += "Siblings: " + findSiblings(person, people).toString() + "\n";
     personFamily += "Children: " + findChildren(person, people).toString() + "\n";
-    personFamily += "Stepchildren: " + findStepchildren(person, people).toString() + "\n";
     personFamily += "Spouse: " + findPersonById(person.currentSpouse, people) + "\n";
     return personFamily;
 }
@@ -435,6 +434,42 @@ function findSiblings(person, people) {
     let person = searchById(personId, people);
     return person.firstName + " " + person.lastName;
   }
+  function findPersonById(personId, people) {
+    if (personId === null) {
+      return "None";
+    }
+    let person = searchById(personId, people);
+    return person.firstName + " " + person.lastName;
+  }
+  
+  
+  function findDescendants(person, people, parent="") {
+    let children = findChildrenObject(person, people);
+  
+    if(children.length === 0) {
+      return "";
+    }
+  
+    return children.map(function(el){
+      return " ---> " + el.firstName + " " + el.lastName + findDescendants(el, people) + "\n";
+    }).reduce(function(total, el) { //Reduce used to remove comma seperated values
+      return total += el;
+    });
+  }
+  
+  function findChildrenObject(person, people) {
+    let children = people.filter(function (el) {
+      if (el.parents.includes(person.id)) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    });
+    return children;
+  }
+  
+  
 // While (user is not done)
 // tempPeople = data  
 // prompt for trait [searchByUserDefied] = choice
