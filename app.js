@@ -368,8 +368,21 @@ function searchByoccupation(people){
 //     );
 //     return results;
 // }
+function searchById(id, people) {
+    let foundPerson = people.filter(function (person) {
+      if (person.id === id) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    });
+    return foundPerson[0];
+    
+  }
+
 function findPersonFamily(person, people) {
-    let personFamily = "Parents: " + findPeopleById(person.parents, people).toString() + "\n";
+    let personFamily = "Parents: " + findParentById(person.parents, people).toString() + "\n";
     personFamily += "Siblings: " + findSiblings(person, people).toString() + "\n";
     personFamily += "Children: " + findChildren(person, people).toString() + "\n";
     personFamily += "Stepchildren: " + findStepchildren(person, people).toString() + "\n";
@@ -414,6 +427,13 @@ function findSiblings(person, people) {
       return person.firstName + " " + person.lastName;
     });
     
+  }
+  function findParentById(personId, people) {
+    if (personId === null) {
+      return "None";
+    }
+    let person = searchById(personId, people);
+    return person.firstName + " " + person.lastName;
   }
 // While (user is not done)
 // tempPeople = data  
